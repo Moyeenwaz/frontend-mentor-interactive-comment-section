@@ -2,10 +2,6 @@
 // import data from "./data.json";
 const container = document.querySelector(".container");
 const sendCommentContainer = document.querySelector(".send-comment-container");
-const plus = document.querySelector(".plus");
-const minus = document.querySelector(".minus");
-const voteCount = document.querySelector(".vote-number");
-const icon = document.querySelectorAll(".icon");
 
 const data = {
   currentUser: {

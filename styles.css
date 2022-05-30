@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: hsl(223, 19%, 93%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.comment-box {
+  max-width: 700px;
+  margin-top: 20px;
+  position: relative;
+  padding: 20px 10px;
+  border-radius: 15px;
+  background-color: #fff;
+  display: flex;
+}
+
+.nested {
+  margin-left: 50px;
+  max-width: fit-content;
+}
+
+.nested::before {
+  content: "";
+  background-color: lightgray;
+  position: absolute;
+  min-height: 100%;
+  width: 1px;
+  left: -10px;
+}
+
+.vote {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  border-radius: 8px;
+  color: #5357b6;
+  padding: 0 10px;
+  background-color: hsl(223, 19%, 93%);
+  justify-content: space-around;
+  margin: 10px 15px 0;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.avatar {
+  width: 30px;
+  margin-right: 15px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  position: relative;
+  width: 100%;
+}
+
+.username {
+  color: hsl(212, 24%, 26%);
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.time-posted {
+  color: hsl(211, 10%, 45%);
+  opacity: 0.6;
+  margin-right: 15px;
+}
+.reply {
+  color: #5357b6;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 2%;
+}
+
+.reply-icon {
+  margin-right: 3px;
+}
+
+.send-comment-container {
+  margin-top: 50px;
+  width: 700px;
+  background-color: white;
+  display: flex;
+  padding: 20px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+
+.current-user-indicator {
+  margin-right: 10px;
+  background-color: hsl(238, 40%, 52%);
+  padding: 5px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 7px;
+}
+
+.current-user-avatar-container {
+  margin-left: 15px;
+  align-self: start;
+}
+
+.input-container {
+  flex: 3;
+}
+
+.btn-container {
+  align-self: start;
+  margin-left: 10px;
+}
+
+.comment {
+  padding-top: 0;
+  padding-left: 10px;
+  width: 100%;
+  height: 70px;
+  outline: none;
+  border: 1px solid lightgray;
+}
+
+.btn {
+  outline: none;
+  border: none;
+  background-color: hsl(238, 40%, 52%);
+  padding: 10px 20px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.btn:hover {
+  background-color: hsl(238, 36%, 40%);
+}

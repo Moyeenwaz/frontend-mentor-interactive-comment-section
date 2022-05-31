@@ -220,5 +220,43 @@ const displaySendCommentContainer = () => {
 
   sendCommentContainer.innerHTML = html;
 };
-
 displaySendCommentContainer();
+
+//Selecting elements
+const sendBtn = document.querySelector(".send");
+const commentField = document.querySelector(".comment");
+const addNewComment = () => {
+  console.log(commentField.value);
+  if (commentField.value.length > 0) {
+    const newComment = `<div class='comment-box current-user'> <div class="vote">
+    <img src="images/icon-plus.svg" class="plus icon" alt="" />
+    <p class="vote-number">0</p>
+    <img src="images/icon-minus.svg" class="minus icon" alt="" />
+  </div>
+  <div class="text-container">
+    <div class="header">
+      <img
+        src=${data.currentUser.image.png}
+        class="avatar"
+        alt=""
+      />
+      <p class="username">${data.currentUser.username}</p>
+      <div class="current-user-indicator">you</div>
+      <p class="time-posted">0 min ago</p>
+      <p class="reply">
+        <img src="images/icon-reply.svg" class="reply-icon" alt="" />Reply
+      </p>
+    </div>
+    <p class="body">
+    ${commentField.value}
+    </p>
+  </div>
+   </div>`;
+    container.insertAdjacentHTML("afterbegin", newComment);
+  }
+  commentField.value = "";
+};
+sendBtn.addEventListener("click", addNewComment);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addNewComment();
+});

@@ -24,7 +24,7 @@ body {
 
 .nested {
   margin-left: 50px;
-  max-width: fit-content;
+  max-width: 650px;
 }
 
 .nested::before {
@@ -33,7 +33,7 @@ body {
   position: absolute;
   min-height: 100%;
   width: 1px;
-  left: -10px;
+  left: -20px;
 }
 
 .vote {
@@ -86,6 +86,10 @@ body {
 
 .reply-icon {
   margin-right: 3px;
+}
+
+.text-container {
+  width: 600px;
 }
 
 .send-comment-container {

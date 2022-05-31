@@ -1,5 +1,4 @@
 ("use strict");
-// import data from "./data.json";
 const container = document.querySelector(".container");
 const sendCommentContainer = document.querySelector(".send-comment-container");
 
@@ -25,10 +24,25 @@ const data = {
         },
         username: "amyrobson",
       },
-      replies: [],
+      replies: [
+        {
+          id: 2,
+          content: "That's great as well! I agree.  ",
+          createdAt: "1 week ago",
+          score: 4,
+          replyingTo: "amyrobson",
+          user: {
+            image: {
+              png: "./images/avatars/image-ramsesmiron.png",
+              webp: "./images/avatars/image-ramsesmiron.webp",
+            },
+            username: "ramsesmiron",
+          },
+        },
+      ],
     },
     {
-      id: 2,
+      id: 3,
       content:
         "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
       createdAt: "2 weeks ago",
@@ -42,7 +56,7 @@ const data = {
       },
       replies: [
         {
-          id: 3,
+          id: 4,
           content:
             "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
           createdAt: "1 week ago",
@@ -57,7 +71,7 @@ const data = {
           },
         },
         {
-          id: 4,
+          id: 5,
           content:
             "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
           createdAt: "2 days ago",
@@ -79,12 +93,13 @@ const data = {
 //Display comments
 
 const displayComments = () => {
+  container.innerHTML = "";
   data.comments.forEach((comment) => {
-    const html = `<div class="comment-box" id=${comment.id}>
+    const html = `
     <div class="vote">
-      <img src="images/icon-plus.svg" class="plus icon" alt="" />
+      <img src="images/icon-plus.svg" class="plus icon" alt="" onclick='increaseVote(this, {once: true})' />
       <p class='vote-number'>${comment.score}</p>
-      <img src="images/icon-minus.svg" class="minus icon" alt="" />
+      <img src="images/icon-minus.svg" class="minus icon" alt="" onclick='decreaseVote(this, {once: true})' />
     </div>
     <div class="text-container">
       <div class="header">
@@ -103,15 +118,92 @@ const displayComments = () => {
           ${comment.content}
       </p>
     </div>
-  </div>
-  `;
-    container.insertAdjacentHTML("beforeend", html);
+    `;
+    const commentBox = document.createElement("div");
+    commentBox.classList.add("comment-box");
+    commentBox.innerHTML = html;
+    container.appendChild(commentBox);
+
+    const p = commentBox.querySelector(".username");
+    const replies = comment.replies;
+    if (replies.length > 0) {
+      let replyBox;
+      replies.forEach((item) => {
+        if (item.replyingTo === p.textContent) {
+          const parentElement = p.closest(".comment-box");
+          replyBox = document.createElement("div");
+          replyBox.classList.add("comment-box", "nested");
+          replyBox.innerHTML = `<div class="vote">
+            <img src="images/icon-plus.svg" class="plus icon" alt="" />
+            <p class="vote-number">${item.score}</p>
+            <img src="images/icon-minus.svg" class="minus icon" alt="" />
+          </div>
+          <div class="text-container">
+            <div class="header">
+              <img
+                src=${item.user.image.png}
+                class="avatar"
+                alt=""
+              />
+              <p class="username">${item.user.username}</p>
+              <p class="time-posted">${item.createdAt}</p>
+              <p class="reply">
+                <img src="images/icon-reply.svg" class="reply-icon" alt="" />Reply
+              </p>
+            </div>
+            <p class="body">
+             ${item.content}
+            </p>
+          </div>`;
+          parentElement.after(replyBox);
+        }
+        const subP = replyBox.querySelector(".username");
+        const parent = subP.closest(".comment-box");
+        if (item.replyingTo === subP.textContent) {
+          const userReply = document.createElement("div");
+          userReply.classList.add("comment-box", "nested", "current-user");
+          userReply.innerHTML = `
+            <div class="vote">
+            <img src="images/icon-plus.svg" class="plus icon" alt="" />
+            <p class="vote-number">${item.score}</p>
+            <img src="images/icon-minus.svg" class="minus icon" alt="" />
+          </div>
+          <div class="text-container">
+            <div class="header">
+              <img
+                src=${item.user.image.png}
+                class="avatar"
+                alt=""
+              />
+              <p class="username">${item.user.username}</p>
+              <div class="current-user-indicator">you</div>
+              <p class="time-posted">${item.createdAt}</p>
+              <p class="reply">
+                <img src="images/icon-reply.svg" class="reply-icon" alt="" />Reply
+              </p>
+            </div>
+            <p class="body">
+            ${item.content}
+            </p>
+          </div>
+            `;
+          parent.after(userReply);
+        }
+      });
+    }
   });
 };
-
+function increaseVote(elem) {
+  elem.nextElementSibling.textContent++;
+}
+function decreaseVote(elem) {
+  elem.previousElementSibling.textContent--;
+}
 displayComments();
 
-const sendComment = () => {
+const displaySendCommentContainer = () => {
+  sendCommentContainer.innerHTML = "";
+
   const html = `<div class="current-user-avatar-container">
   <img
     src=${data.currentUser.image.png}
@@ -129,48 +221,4 @@ const sendComment = () => {
   sendCommentContainer.innerHTML = html;
 };
 
-sendComment();
-
-const voteContainer = container.querySelectorAll(".vote");
-
-voteContainer.forEach((container) => {
-  container.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.classList.contains("plus")) {
-      console.log("plus");
-    } else if (target.classList.contains("minus")) {
-      console.log("minus");
-    }
-  });
-});
-
-// ${
-//     comment.replies.length > 0
-//       ? comment.replies.forEach((reply) => {
-//   const html = ` <div class="comment-box nested">
-//   <div class="vote">
-//     <img src="images/icon-plus.svg" class="plus icon" alt="" />
-//     <p class="vote-number">12</p>
-//     <img src="images/icon-minus.svg" class="minus icon" alt="" />
-//   </div>
-//   <div class="text-container">
-//     <div class="header">
-//       <img
-//         src=${reply.user.image.png}
-//         class="avatar"
-//         alt=""
-//       />
-//       <p class="username">${reply.user.username}</p>
-//       <p class="time-posted">${reply.createdAt}</p>
-//       <p class="reply">
-//         <img src="images/icon-reply.svg" class="reply-icon" alt="" />Reply
-//       </p>
-//     </div>
-//     <p class="body">
-//      ${reply.content}
-//     </p>
-//   </div>
-// </div>`;
-//           commentBox.insertAdjacentHTML("afterend", html);
-//         })
-//       : null}
+displaySendCommentContainer();

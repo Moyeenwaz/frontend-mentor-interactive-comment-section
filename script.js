@@ -204,19 +204,27 @@ displayComments();
 const displaySendCommentContainer = () => {
   sendCommentContainer.innerHTML = "";
 
-  const html = `<div class="current-user-avatar-container">
-  <img
-    src=${data.currentUser.image.png}
-    alt=""
-    class="current-user avatar"
-  />
-</div>
-<div class="input-container">
-  <input name="" id="" placeholder="add a comment..." class="comment" />
-</div>
-<div class="btn-container">
-  <button class="btn send">Send</button>
-</div>`;
+  const html = `
+  <div class="current-user-avatar-container">
+    <img
+      src=${data.currentUser.image.png}
+      alt=""
+      class="current-user avatar"
+    />
+  </div>
+  <div class="input-container">
+    <textarea
+    name=""
+    id=""
+    rows="5"
+    placeholder="Add a comment..."
+    class="comment"
+    ></textarea>
+  </div>
+  <div class="btn-container">
+    <button class="btn send">Send</button>
+  </div>
+`;
 
   sendCommentContainer.innerHTML = html;
 };
